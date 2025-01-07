@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       addTask();
     }
   });
-  deleteButton.addEventListener("click", deleteAllTask());
+  deleteButton.addEventListener("click", deleteAllTask);
   displayTasks()
 });
 
@@ -38,7 +38,58 @@ function deleteAllTask() {
 }
 
 function displayTasks() {
-  // some logic
+  todoList.innerHTML = "";
+  todo.forEach((item, index) => {
+    const p = document.createElement("p");
+    p.innerHTML = `
+      <div class="todo-container">
+        <input type="checkbox" class="todo-checkbox" id="input-${index}"
+        ${item.disabled ? "checked": ""}>
+
+        <p id="todo-${index}" class="${item.disabled ? "disabled" : ""
+
+        }"onclick="editTask(${index})">${item.text}</p>
+      </div>
+    `;
+    p.querySelector(".todo-checkbox").addEventListener("change", () => {
+      toggleTask(index);
+    });
+    todoList.appendChild(p);
+  });
+  todoCount.textContent = todo.length;
+  
+}
+
+function editTask(index) {
+  const todoItem = document.getElementById(`todo-${index}`);
+  const existingText = todo[index].text;
+  const inputElement = document.createElement("input");
+
+  inputElement.value = existingText;
+  todoItem.replaceWith(inputElement);
+  inputElement.focus();
+
+  inputElement.addEventListener("blur", function () {
+    const updateText = inputElement.value.trim();
+    if (updateText) {
+      todo[index].text = updateText;
+      saveToLocalStorage();
+    }
+    displayTasks();
+  });
+
+}
+
+function toggleTask(index) {
+  todo[index].disabled = !todo[index].disabled;
+  saveToLocalStorage();
+  displayTasks();
+}
+
+function deleteAllTask() {
+  todo = [];
+  saveToLocalStorage();
+  displayTasks();
 }
 
 function saveToLocalStorage() {
