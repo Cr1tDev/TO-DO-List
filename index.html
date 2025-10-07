@@ -8,253 +8,198 @@
     <title>Todo Application</title>
   </head>
   <body>
-    <div class="app-container">
-      <div class="header">
-        <h1>My Tasks</h1>
-        <p>Organize your day efficiently</p>
-      </div>
+    <div class="app">
+      <!-- Header -->
+      <header class="app__header">
+        <h1 class="header__title">My Tasks</h1>
+        <p class="header__subtitle">Organize your day efficiently</p>
+      </header>
 
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">Total Tasks</div>
-          <div class="stat-value">12</div>
+      <!-- Stats Section -->
+      <section class="stats">
+        <div class="stats__card">
+          <span class="stats__value">12</span>
+          <span class="stats__label">Total Tasks</span>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Completed</div>
-          <div class="stat-value">7</div>
+        <div class="stats__card">
+          <span class="stats__value">7</span>
+          <span class="stats__label">Completed</span>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">In Progress</div>
-          <div class="stat-value">5</div>
+        <div class="stats__card">
+          <span class="stats__value">5</span>
+          <span class="stats__label">In Progress</span>
         </div>
-      </div>
+      </section>
 
-      <div class="main-card">
-        <div class="card-header">
-          <div class="input-group">
-            <div class="input-wrapper">
-              <input
-                type="text"
-                placeholder="Search tasks..."
-                id="searchInput"
-              />
-            </div>
-            <button class="add-btn">+ Add Task</button>
+      <!-- Task List Card -->
+      <main class="task-card">
+        <!-- Header -->
+        <div class="task-card__header">
+          <div class="task-card__input-group">
+            <input
+              type="text"
+              class="task-card__search"
+              placeholder="Search tasks..."
+              id="searchInput"
+            />
+            <button class="task-card__add-btn">+ Add Task</button>
           </div>
         </div>
 
-        <div class="filters">
-          <button class="filter-btn active">All</button>
-          <button class="filter-btn">Active</button>
-          <button class="filter-btn">Completed</button>
-          <button class="filter-btn">High Priority</button>
+        <!-- Filters -->
+        <div class="task-filters">
+          <button class="task-filters__btn active">All</button>
+          <button class="task-filters__btn">Active</button>
+          <button class="task-filters__btn">Completed</button>
+          <button class="task-filters__btn">High Priority</button>
         </div>
 
-        <ul class="todo-list">
-          <li class="todo-item">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">
+        <!-- Task List -->
+        <ul class="task-list">
+          <li class="task-list__item">
+            <div class="task-item__checkbox"></div>
+            <div class="task-item__content">
+              <p class="task-item__text">
                 Review quarterly business reports and prepare presentation
-              </div>
-              <div class="todo-meta">
-                <span class="priority high">High</span>
-                <span class="due-date">Due: Today</span>
+              </p>
+              <div class="task-item__meta">
+                <span class="task-item__priority task-item__priority--high"
+                  >High</span
+                >
+                <span class="task-item__due">Due: Today</span>
               </div>
             </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
+            <div class="task-item__actions">
+              <button class="task-item__btn">Edit</button>
+              <button class="task-item__btn task-item__btn--delete">
+                Delete
+              </button>
             </div>
           </li>
 
-          <li class="todo-item completed">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">
+          <li class="task-list__item task-list__item--completed">
+            <div class="task-item__checkbox"></div>
+            <div class="task-item__content">
+              <p class="task-item__text">
                 Schedule team meeting for project kickoff
-              </div>
-              <div class="todo-meta">
-                <span class="priority medium">Medium</span>
-                <span class="due-date">Due: Yesterday</span>
+              </p>
+              <div class="task-item__meta">
+                <span class="task-item__priority task-item__priority--medium"
+                  >Medium</span
+                >
+                <span class="task-item__due">Due: Yesterday</span>
               </div>
             </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
+            <div class="task-item__actions">
+              <button class="task-item__btn">Edit</button>
+              <button class="task-item__btn task-item__btn--delete">
+                Delete
+              </button>
             </div>
           </li>
 
-          <li class="todo-item">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">
-                Update website content and fix broken links
-              </div>
-              <div class="todo-meta">
-                <span class="priority medium">Medium</span>
-                <span class="due-date">Due: Tomorrow</span>
-              </div>
-            </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
-            </div>
-          </li>
-
-          <li class="todo-item completed">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">Reply to client emails</div>
-              <div class="todo-meta">
-                <span class="priority low">Low</span>
-                <span class="due-date">Due: 2 days ago</span>
-              </div>
-            </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
-            </div>
-          </li>
-
-          <li class="todo-item">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">Research new marketing strategies</div>
-              <div class="todo-meta">
-                <span class="priority low">Low</span>
-                <span class="due-date">Due: Next week</span>
-              </div>
-            </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
-            </div>
-          </li>
-
-          <li class="todo-item">
-            <div class="checkbox-wrapper">
-              <div class="checkbox"></div>
-            </div>
-            <div class="todo-content">
-              <div class="todo-text">Prepare monthly budget report</div>
-              <div class="todo-meta">
-                <span class="priority high">High</span>
-                <span class="due-date">Due: Tomorrow</span>
-              </div>
-            </div>
-            <div class="todo-actions">
-              <button class="action-btn">Edit</button>
-              <button class="action-btn delete">Delete</button>
-            </div>
-          </li>
+          <!-- More tasks... -->
         </ul>
 
-        <div class="card-footer">
-          <span>5 tasks remaining</span>
-          <button class="clear-btn">Clear Completed</button>
-        </div>
-      </div>
+        <!-- Footer -->
+        <footer class="task-card__footer">
+          <span class="task-footer__count">5 tasks remaining</span>
+          <button class="task-footer__clear-btn">Clear Completed</button>
+        </footer>
+      </main>
 
       <!-- Edit Task Modal -->
-      <div class="modal-overlay-edit">
-        <div class="modal">
-          <div class="modal-header">
-            <h2 class="modal-title">Edit Task</h2>
-            <button class="close-btn">×</button>
+      <div class="modal modal--edit">
+        <div class="modal__content">
+          <div class="modal__header">
+            <h2 class="modal__title">Edit Task</h2>
+            <button class="modal__close-btn">×</button>
           </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">Task Description</label>
-              <textarea
-                class="form-input edit-input__name"
-                placeholder="Enter task description..."
-              >
+          <div class="modal__body">
+            <div class="form__group">
+              <label class="form__label">Task Description</label>
+              <textarea class="form__input form__input--text">
 Review quarterly business reports and prepare presentation</textarea
               >
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Due Date</label>
+
+            <div class="form__row">
+              <div class="form__group">
+                <label class="form__label">Due Date</label>
                 <input
                   type="date"
-                  class="form-input edit-input__date"
+                  class="form__input form__input--date"
                   value="2025-10-07"
                 />
               </div>
-              <div class="form-group">
-                <label class="form-label">Priority</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <div class="radio-label high">High</div>
-                  </div>
-                  <div class="radio-option">
-                    <div class="radio-label medium">Med</div>
-                  </div>
-                  <div class="radio-option">
-                    <div class="radio-label low">Low</div>
-                  </div>
+
+              <div class="form__group">
+                <label class="form__label">Priority</label>
+                <div class="priority-select">
+                  <button class="priority-select__btn" data-priority="high">
+                    High
+                  </button>
+                  <button class="priority-select__btn" data-priority="medium">
+                    Med
+                  </button>
+                  <button class="priority-select__btn" data-priority="low">
+                    Low
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button class="modal-btn cancel">Cancel</button>
-            <button class="modal-btn save">Save Changes</button>
+
+          <div class="modal__footer">
+            <button class="modal__btn modal__btn--cancel">Cancel</button>
+            <button class="modal__btn modal__btn--save">Save Changes</button>
           </div>
         </div>
       </div>
 
       <!-- Add Task Modal -->
-      <div class="modal-overlay-add">
-        <div class="modal">
-          <div class="modal-header">
-            <h2 class="modal-title">Add New Task</h2>
-            <button class="close-btn">×</button>
+      <div class="modal modal--add">
+        <div class="modal__content">
+          <div class="modal__header">
+            <h2 class="modal__title">Add New Task</h2>
+            <button class="modal__close-btn">×</button>
           </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">Task Name</label>
+          <div class="modal__body">
+            <div class="form__group">
+              <label class="form__label">Task Name</label>
               <input
                 type="text"
-                class="form-input add-input__name"
+                class="form__input form__input--name"
                 placeholder="Enter task name..."
               />
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Due Date</label>
-                <input type="date" class="form-input add-input__date" />
+
+            <div class="form__row">
+              <div class="form__group">
+                <label class="form__label">Due Date</label>
+                <input type="date" class="form__input form__input--date" />
               </div>
-              <div class="form-group">
-                <label class="form-label">Priority</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <div class="radio-label high">High</div>
-                  </div>
-                  <div class="radio-option">
-                    <div class="radio-label medium">Med</div>
-                  </div>
-                  <div class="radio-option">
-                    <div class="radio-label low">Low</div>
-                  </div>
+
+              <div class="form__group">
+                <label class="form__label">Priority</label>
+                <div class="priority-select">
+                  <button class="priority-select__btn" data-priority="high">
+                    High
+                  </button>
+                  <button class="priority-select__btn" data-priority="medium">
+                    Med
+                  </button>
+                  <button class="priority-select__btn" data-priority="low">
+                    Low
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button class="modal-btn cancel">Cancel</button>
-            <button class="modal-btn save">Add Task</button>
+
+          <div class="modal__footer">
+            <button class="modal__btn modal__btn--cancel">Cancel</button>
+            <button class="modal__btn modal__btn--save">Add Task</button>
           </div>
         </div>
       </div>
