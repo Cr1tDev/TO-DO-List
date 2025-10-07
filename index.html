@@ -35,11 +35,11 @@
             <div class="input-wrapper">
               <input
                 type="text"
-                placeholder="What needs to be done?"
-                id="taskInput"
+                placeholder="Search tasks..."
+                id="searchInput"
               />
             </div>
-            <button class="add-btn">Add Task</button>
+            <button class="add-btn">+ Add Task</button>
           </div>
         </div>
 
@@ -207,6 +207,50 @@ Review quarterly business reports and prepare presentation</textarea
           <div class="modal-footer">
             <button class="modal-btn cancel">Cancel</button>
             <button class="modal-btn save">Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Task Modal -->
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">Add New Task</h2>
+            <button class="close-btn">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label">Task Name</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Enter task name..."
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Due Date</label>
+                <input type="date" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Priority</label>
+                <div class="radio-group">
+                  <div class="radio-option">
+                    <div class="radio-label high">High</div>
+                  </div>
+                  <div class="radio-option">
+                    <div class="radio-label medium">Med</div>
+                  </div>
+                  <div class="radio-option">
+                    <div class="radio-label low">Low</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-btn cancel">Cancel</button>
+            <button class="modal-btn save">Add Task</button>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import * as model from "./modal.js";
+import view from "./views.js";
 
 export const init = function () {
-  model.addTodo("test Task");
-  model.addTodo("test two");
+  model.loadTodos();
   console.log(model.state.todos);
 };
