@@ -1,35 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <script src="./script.js" defer></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="script.js" />
+    <title>Todo Application</title>
   </head>
   <body>
-    <section class="todo">
-      <h2>To-do list</h2>
-      <div class="input">
-        <input type="text" class="input-field" id="todoInput" placeholder="Add a new todo">
-        <button class="btn">Add</button>
+    <div class="app-container">
+      <div class="header">
+        <h1>My Tasks</h1>
+        <p>Organize your day efficiently</p>
       </div>
-      <ul class="scroll">
-        <li id="todoList"></li>
-      </ul>
-      <div>
-        <hr class="counter">
-        <div class="counter-container">
-          <p><span id="todoCount">0</span> items total</p>
-          <button id="deleteButton">Delete All</button>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Tasks</div>
+          <div class="stat-value">12</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Completed</div>
+          <div class="stat-value">7</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">In Progress</div>
+          <div class="stat-value">5</div>
         </div>
       </div>
-    </section>
-    <footer>
-      <div class="footer">
-        <p class="main-by">Made by</p>
-        <p class="authoer">Ivan Arre</p>
+
+      <div class="main-card">
+        <div class="card-header">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                placeholder="What needs to be done?"
+                id="taskInput"
+              />
+            </div>
+            <button class="add-btn">Add Task</button>
+          </div>
+        </div>
+
+        <div class="filters">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Active</button>
+          <button class="filter-btn">Completed</button>
+          <button class="filter-btn">High Priority</button>
+        </div>
+
+        <ul class="todo-list">
+          <li class="todo-item">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">
+                Review quarterly business reports and prepare presentation
+              </div>
+              <div class="todo-meta">
+                <span class="priority high">High</span>
+                <span class="due-date">Due: Today</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+
+          <li class="todo-item completed">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">
+                Schedule team meeting for project kickoff
+              </div>
+              <div class="todo-meta">
+                <span class="priority medium">Medium</span>
+                <span class="due-date">Due: Yesterday</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+
+          <li class="todo-item">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">
+                Update website content and fix broken links
+              </div>
+              <div class="todo-meta">
+                <span class="priority medium">Medium</span>
+                <span class="due-date">Due: Tomorrow</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+
+          <li class="todo-item completed">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">Reply to client emails</div>
+              <div class="todo-meta">
+                <span class="priority low">Low</span>
+                <span class="due-date">Due: 2 days ago</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+
+          <li class="todo-item">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">Research new marketing strategies</div>
+              <div class="todo-meta">
+                <span class="priority low">Low</span>
+                <span class="due-date">Due: Next week</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+
+          <li class="todo-item">
+            <div class="checkbox-wrapper">
+              <div class="checkbox"></div>
+            </div>
+            <div class="todo-content">
+              <div class="todo-text">Prepare monthly budget report</div>
+              <div class="todo-meta">
+                <span class="priority high">High</span>
+                <span class="due-date">Due: Tomorrow</span>
+              </div>
+            </div>
+            <div class="todo-actions">
+              <button class="action-btn">Edit</button>
+              <button class="action-btn delete">Delete</button>
+            </div>
+          </li>
+        </ul>
+
+        <div class="card-footer">
+          <span>5 tasks remaining</span>
+          <button class="clear-btn">Clear Completed</button>
+        </div>
       </div>
-    </footer>
+
+      <!-- Edit Task Modal -->
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-header">
+            <h2 class="modal-title">Edit Task</h2>
+            <button class="close-btn">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="form-label">Task Description</label>
+              <textarea
+                class="form-input"
+                placeholder="Enter task description..."
+              >
+Review quarterly business reports and prepare presentation</textarea
+              >
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Due Date</label>
+                <input type="date" class="form-input" value="2025-10-07" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Priority</label>
+                <div class="radio-group">
+                  <div class="radio-option">
+                    <div class="radio-label high">High</div>
+                  </div>
+                  <div class="radio-option">
+                    <div class="radio-label medium">Med</div>
+                  </div>
+                  <div class="radio-option">
+                    <div class="radio-label low">Low</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-btn cancel">Cancel</button>
+            <button class="modal-btn save">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
