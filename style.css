@@ -297,7 +297,8 @@ input[type="text"]:focus {
   background: white;
 }
 
-.modal-overlay {
+.modal-overlay-edit,
+.modal-overlay-add {
   position: fixed;
   top: 0;
   left: 0;
@@ -311,7 +312,8 @@ input[type="text"]:focus {
   padding: 20px;
 }
 
-.modal-overlay.show {
+.modal-overlay-edit.show,
+.modal-overlay-add.show {
   display: flex;
 }
 

@@ -167,7 +167,7 @@
       </div>
 
       <!-- Edit Task Modal -->
-      <div class="modal-overlay">
+      <div class="modal-overlay-edit">
         <div class="modal">
           <div class="modal-header">
             <h2 class="modal-title">Edit Task</h2>
@@ -177,7 +177,7 @@
             <div class="form-group">
               <label class="form-label">Task Description</label>
               <textarea
-                class="form-input"
+                class="form-input edit-input__name"
                 placeholder="Enter task description..."
               >
 Review quarterly business reports and prepare presentation</textarea
@@ -186,7 +186,11 @@ Review quarterly business reports and prepare presentation</textarea
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Due Date</label>
-                <input type="date" class="form-input" value="2025-10-07" />
+                <input
+                  type="date"
+                  class="form-input edit-input__date"
+                  value="2025-10-07"
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Priority</label>
@@ -212,7 +216,7 @@ Review quarterly business reports and prepare presentation</textarea
       </div>
 
       <!-- Add Task Modal -->
-      <div class="modal-overlay">
+      <div class="modal-overlay-add">
         <div class="modal">
           <div class="modal-header">
             <h2 class="modal-title">Add New Task</h2>
@@ -223,14 +227,14 @@ Review quarterly business reports and prepare presentation</textarea
               <label class="form-label">Task Name</label>
               <input
                 type="text"
-                class="form-input"
+                class="form-input add-input__name"
                 placeholder="Enter task name..."
               />
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Due Date</label>
-                <input type="date" class="form-input" />
+                <input type="date" class="form-input add-input__date" />
               </div>
               <div class="form-group">
                 <label class="form-label">Priority</label>

@@ -14,7 +14,7 @@ export const saveTodos = function () {
 export const addTodo = function (text) {
   const newTodo = {
     id: Date.now().toString(36) + Math.random().toString(36).substring(2, 9),
-    task: text,
+    taskName: text,
     completed: false,
   };
 
