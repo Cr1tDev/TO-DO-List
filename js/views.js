@@ -6,6 +6,7 @@ class TodoView {
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
   _selectedPriority = "medium";
+  _addTaskData;
   render(todos) {
     // this._parentEl.innerHTML = "";
     // todos.forEach((todo) => {
@@ -35,12 +36,7 @@ class TodoView {
     // });
   }
 
-  addHandlerAddTask() {
-    this._AddTaskBtn.addEventListener("click", () => {
-      this._initPrioritySelector();
-      this._addModalPerentEl.style.display = "flex";
-    });
-
+  addHandlerAddTask(handler) {
     document.body.addEventListener("click", (e) => {
       const isCancel = e.target.matches(".modal__btn--cancel");
       const isClose = e.target.matches(".modal__close-btn");
@@ -50,11 +46,16 @@ class TodoView {
         this._addModalPerentEl.style.display = "none";
       }
 
-      // Save and Close Modal
+      // When Save button is clicked
       if (e.target.matches(".modal__btn--save")) {
         const data = this._getFormData();
-        console.log(data);
+        const validData = this.handlerSaveFormData(data);
+        if (!validData) return;
+
+        this._addTaskData = validData; // store internally
+        handler(validData); // send data to controller
         this._addModalPerentEl.style.display = "none";
+        this._form.reset();
       }
     });
   }
@@ -79,13 +80,16 @@ class TodoView {
     const taskName = document.querySelector("#addTaskName").value.trim();
     const dueDate = document.querySelector("#addDueDate").value;
 
-    if (!taskName && dueDate) return;
-
     return {
       taskName,
       dueDate,
       priority: this._selectedPriority,
     };
+  }
+
+  handlerSaveFormData(data) {
+    if (!data.taskName || !data.dueDate) return;
+    return data;
   }
 
   addHandlerToggle(handler) {
