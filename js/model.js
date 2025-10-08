@@ -12,10 +12,17 @@ export const saveTodos = function () {
 };
 
 export const addTodo = function (text) {
+  // generate a random id
+  const id =
+    Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+
   const newTodo = {
-    id: Date.now().toString(36) + Math.random().toString(36).substring(2, 9),
+    id: id,
     taskName: text,
     completed: false,
+    priority: "high",
+    dueDate: "2025-10-07",
+    createdAt: "07",
   };
 
   state.todos.push(newTodo);
@@ -31,4 +38,10 @@ export const toggleTodo = function (id) {
 export const deleteTodo = function (id) {
   state.todos = state.todos.filter((t) => t.id !== id);
   saveTodos();
+};
+
+export const getTodoStats = function () {
+  const total = state.tasks.length;
+  const completed = state.tasks.filter((t) => t.completed).length;
+  return { total, completed };
 };
