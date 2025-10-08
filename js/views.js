@@ -2,44 +2,42 @@ class TodoView {
   // DOM elements
   _parentEl = document.querySelector(".todo-list");
   _addModalPerentEl = document.querySelector(".modal--add");
-
   _form = document.querySelector(".modal__body form");
-  // Buttons
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
+  _selectedPriority = "medium";
   render(todos) {
-    this._parentEl.innerHTML = "";
-
-    todos.forEach((todo) => {
-      const markup = `
-        <li class="todo-item ${todo.completed ? "completed" : ""}" data-id="${
-        todo.id
-      }">
-          <div class="checkbox-wrapper">
-            <div class="checkbox"></div>
-          </div>
-          <div class="todo-content">
-            <div class="todo-text">
-              Review quarterly business reports and prepare presentation
-            </div>
-            <div class="todo-meta">
-              <span class="priority high">High</span>
-              <span class="due-date">Due: Today</span>
-            </div>
-          </div>
-          <div class="todo-actions">
-            <button class="action-btn">Edit</button>
-            <button class="action-btn delete">Delete</button>
-          </div>
-        </li>
-      `;
-      this._parentEl.insertAdjacentHTML("beforeend", markup);
-    });
+    // this._parentEl.innerHTML = "";
+    // todos.forEach((todo) => {
+    //   const markup = `
+    //     <li class="todo-item ${todo.completed ? "completed" : ""}" data-id="${
+    //     todo.id
+    //   }">
+    //       <div class="checkbox-wrapper">
+    //         <div class="checkbox"></div>
+    //       </div>
+    //       <div class="todo-content">
+    //         <div class="todo-text">
+    //           Review quarterly business reports and prepare presentation
+    //         </div>
+    //         <div class="todo-meta">
+    //           <span class="priority high">High</span>
+    //           <span class="due-date">Due: Today</span>
+    //         </div>
+    //       </div>
+    //       <div class="todo-actions">
+    //         <button class="action-btn">Edit</button>
+    //         <button class="action-btn delete">Delete</button>
+    //       </div>
+    //     </li>
+    //   `;
+    //   this._parentEl.insertAdjacentHTML("beforeend", markup);
+    // });
   }
 
   addHandlerAddTask() {
     this._AddTaskBtn.addEventListener("click", () => {
-      this.handlerGetFormData();
+      this._initPrioritySelector();
       this._addModalPerentEl.style.display = "flex";
     });
 
@@ -52,32 +50,42 @@ class TodoView {
         this._addModalPerentEl.style.display = "none";
       }
 
-      // 🟣 Save task and close modal
+      // Save and Close Modal
       if (e.target.matches(".modal__btn--save")) {
-        this.handlerSaveFormData();
+        const data = this._getFormData();
+        console.log(data);
         this._addModalPerentEl.style.display = "none";
       }
     });
   }
 
-  handlerGetFormData() {
+  _initPrioritySelector() {
     const priorityBtn = document.querySelectorAll(".priority-select__btn");
+
     priorityBtn.forEach((btn) => {
       btn.addEventListener("click", () => {
         priorityBtn.forEach((b) =>
           b.classList.remove("priority-select__btn--active")
         );
+
         btn.classList.add("priority-select__btn--active");
+
+        this._selectedPriority = btn.dataset.priority;
       });
     });
   }
 
-  handlerSaveFormData() {
+  _getFormData() {
     const taskName = document.querySelector("#addTaskName").value.trim();
     const dueDate = document.querySelector("#addDueDate").value;
 
     if (!taskName && dueDate) return;
-    console.log(taskName, dueDate);
+
+    return {
+      taskName,
+      dueDate,
+      priority: this._selectedPriority,
+    };
   }
 
   addHandlerToggle(handler) {

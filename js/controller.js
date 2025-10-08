@@ -7,6 +7,7 @@ export const init = function () {
 
   const eventHandler = function () {
     view.addHandlerAddTask();
+    view.render();
   };
 
   eventHandler();
