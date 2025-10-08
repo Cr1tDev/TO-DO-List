@@ -3,13 +3,10 @@ class TodoView {
   _parentEl = document.querySelector(".todo-list");
   _addModalPerentEl = document.querySelector(".modal--add");
 
+  _form = document.querySelector(".modal__body form");
   // Buttons
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
-  /**
-   * Render the todo list items in the DOM
-   * @param {Array} todos - List of todo objects
-   */
   render(todos) {
     this._parentEl.innerHTML = "";
 
@@ -40,17 +37,12 @@ class TodoView {
     });
   }
 
-  /**
-   * Handle Add Task button and modal open/close behavior
-   */
   addHandlerAddTask() {
-    // 🟢 Open modal when Add Task button is clicked
     this._AddTaskBtn.addEventListener("click", () => {
-      this.addHandlerGetTask();
+      this.handlerGetFormData();
       this._addModalPerentEl.style.display = "flex";
     });
 
-    // 🔵 Close modal when user clicks cancel, close, or outside modal
     document.body.addEventListener("click", (e) => {
       const isCancel = e.target.matches(".modal__btn--cancel");
       const isClose = e.target.matches(".modal__close-btn");
@@ -62,64 +54,32 @@ class TodoView {
 
       // 🟣 Save task and close modal
       if (e.target.matches(".modal__btn--save")) {
-        this.addHandlerGetTask();
+        this.handlerSaveFormData();
         this._addModalPerentEl.style.display = "none";
       }
     });
   }
 
-  /**
-   * Collects task input data: name, date, and priority
-   */
-  addHandlerGetTask() {
-    const taskName = document.querySelector(".form__input--name");
-    const taskDate = document.querySelector(".form__input--date");
-    const taskPriority = document.querySelectorAll(".priority--edit");
-
-    let selectedPriority = null;
-
-    // 🟩 Handle selecting a priority
-    taskPriority.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        // Clear all active priorities
-        taskPriority.forEach((b) => b.classList.remove("active"));
-
-        // Set the clicked one as active
-        btn.classList.add("active");
-
-        // Save the selected priority
-        selectedPriority = e.target.dataset.priority;
-        console.log("Selected priority:", selectedPriority);
+  handlerGetFormData() {
+    const priorityBtn = document.querySelectorAll(".priority-select__btn");
+    priorityBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        priorityBtn.forEach((b) =>
+          b.classList.remove("priority-select__btn--active")
+        );
+        btn.classList.add("priority-select__btn--active");
       });
-    });
-
-    // 🟦 Handle save logic
-    const saveBtn = document.querySelector(".modal__btn--save");
-    saveBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const taskData = {
-        name: taskName.value.trim(),
-        date: taskDate.value,
-        priority: selectedPriority,
-      };
-
-      console.log("Task Data:", taskData);
-
-      // 🧹 Reset form fields
-      taskName.value = "";
-      taskDate.value = "";
-      taskPriority.forEach((b) => b.classList.remove("active"));
-      selectedPriority = null;
     });
   }
 
-  /**
-   * Handle toggling completed state
-   * @param {Function} handler - callback with todo ID
-   */
+  handlerSaveFormData() {
+    const taskName = document.querySelector("#addTaskName").value.trim();
+    const dueDate = document.querySelector("#addDueDate").value;
+
+    if (!taskName && dueDate) return;
+    console.log(taskName, dueDate);
+  }
+
   addHandlerToggle(handler) {
     this._parentEl.addEventListener("click", (e) => {
       const item = e.target.closest(".todo-item");
@@ -128,10 +88,6 @@ class TodoView {
     });
   }
 
-  /**
-   * Handle deleting a task
-   * @param {Function} handler - callback with todo ID
-   */
   addHandlerDelete(handler) {
     this._parentEl.addEventListener("click", (e) => {
       if (!e.target.classList.contains("btn-delete")) return;
