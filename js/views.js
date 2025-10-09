@@ -152,6 +152,7 @@ class TodoView {
         // Save changes
         if (event.target.matches(".modal__btn--save")) {
           const updatedData = this._getEditFormData();
+          console.log(updatedData);
           // handler(id, updatedData);
           // editModal.style.display = "none";
         }
@@ -166,29 +167,37 @@ class TodoView {
     const dueDate = document.querySelector("#editDueDate");
     const priorityBtn = document.querySelectorAll(".priority-edit__btn");
 
-    const prioClass = "priority-select__btn--active";
+    const ACTIVE_CLASS = "priority-select__btn--active";
 
     taskName.value = task.taskName || "";
     dueDate.value = task.dueDate || "";
 
     priorityBtn.forEach((btn) => {
-      btn.classList.remove(`${prioClass}`);
+      btn.classList.remove(ACTIVE_CLASS);
     });
 
     priorityBtn.forEach((btn) => {
       if (btn.dataset.priority === task.priority) {
-        btn.classList.add(`${prioClass}`);
+        btn.classList.add(ACTIVE_CLASS);
       }
+    });
+
+    priorityBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        priorityBtn.forEach((b) => b.classList.remove(ACTIVE_CLASS));
+
+        btn.classList.add(ACTIVE_CLASS);
+      });
     });
   }
 
-  _getEditFormData(id) {
-    // return {
-    //   taskName: document.querySelector("#editTaskName").value.trim(),
-    //   dueDate: document.querySelector("#editDueDate").value,
-    //   priority: document.querySelector(".edit-priority-select__btn--active")
-    //     .dataset.priority,
-    // };
+  _getEditFormData() {
+    return {
+      taskName: document.querySelector("#editTaskText").value.trim(),
+      dueDate: document.querySelector("#editDueDate").value,
+      priority: document.querySelector(".priority-select__btn--active").dataset
+        .priority,
+    };
   }
 
   addHandlerDelete(handler) {
