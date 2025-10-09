@@ -13,15 +13,15 @@ class TodoView {
     this.#data = data;
     const markup = this.taskHandlerMarkup();
     this._taskParentEl.innerHTML = "";
-    this._taskParentEl.insertAdjacentHTML("afterbegin", markup);
+    this._taskParentEl.insertAdjacentHTML("beforeend", markup);
   }
 
   taskHandlerMarkup() {
     return this.#data
       .map((task) => {
         return `
-        <li class="task-list__item ${
-          task.completed ? "task-list__item--completed" : ""
+        <li class="task-list__item task-list__item--${
+          task.completed ? "completed" : ""
         }" data-id="${task.id}">
           <div
             class="task-item__checkbox"
@@ -58,6 +58,7 @@ class TodoView {
         </li>
       `;
       })
+      .reverse()
       .join("");
   }
 
@@ -116,11 +117,9 @@ class TodoView {
 
   addHandlerToggle(handler) {
     this._taskParentEl.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("task-item__checkbox")) return;
       const item = e.target.closest(".task-list__item");
       if (!item) return;
-
-      // Ignore clicks on Edit/Delete buttons
-      if (e.target.closest(".task-item__btn")) return;
 
       const id = item.dataset.id;
       handler(id);
@@ -128,9 +127,12 @@ class TodoView {
   }
 
   addHandlerDelete(handler) {
-    this._parentEl.addEventListener("click", (e) => {
-      if (!e.target.classList.contains("btn-delete")) return;
-      const id = e.target.closest(".todo-item").dataset.id;
+    this._taskParentEl.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("task-item__btn--delete")) return;
+      const item = e.target.closest(".task-list__item");
+      if (!item) return;
+
+      const id = item.dataset.id;
       handler(id);
     });
   }

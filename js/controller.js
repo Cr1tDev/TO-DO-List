@@ -3,7 +3,6 @@ import view from "./views.js";
 
 export const init = function () {
   model.loadTodos();
-  console.log(model.state.todos);
   view.render(model.state.todos);
 
   // Open modal when add button is clicked
@@ -18,9 +17,15 @@ export const init = function () {
     view.render(model.state.todos);
   });
 
-  // Toggle completed task
+  // Handle toggle task
   view.addHandlerToggle(function (id) {
     model.toggleTodo(id);
+    view.render(model.state.todos);
+  });
+
+  // Handle delete task
+  view.addHandlerDelete(function (id) {
+    model.deleteTodo(id);
     view.render(model.state.todos);
   });
 };
