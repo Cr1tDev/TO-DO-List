@@ -20,7 +20,9 @@ class TodoView {
     return this.#data
       .map((task) => {
         return `
-        <li class="task-list__item">
+        <li class="task-list__item ${
+          task.completed ? "task-list__item--completed" : ""
+        }" data-id="${task.id}">
           <div
             class="task-item__checkbox"
             role="checkbox"
@@ -113,10 +115,15 @@ class TodoView {
   }
 
   addHandlerToggle(handler) {
-    this._parentEl.addEventListener("click", (e) => {
-      const item = e.target.closest(".todo-item");
+    this._taskParentEl.addEventListener("click", (e) => {
+      const item = e.target.closest(".task-list__item");
       if (!item) return;
-      handler(item.dataset.id);
+
+      // Ignore clicks on Edit/Delete buttons
+      if (e.target.closest(".task-item__btn")) return;
+
+      const id = item.dataset.id;
+      handler(id);
     });
   }
 
