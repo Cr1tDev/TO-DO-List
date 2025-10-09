@@ -105,7 +105,7 @@ class TodoView {
     const taskName = document.querySelector("#addTaskName").value.trim();
     const dueDate = document.querySelector("#addDueDate").value;
 
-    if (taskName === "" && dueDate === "") return;
+    if (taskName === "") return;
 
     return {
       taskName,
@@ -132,10 +132,6 @@ class TodoView {
 
       // Open edit modal
       const editModal = document.querySelector(".modal--edit");
-      const sample = editModal.querySelector(".modal__body");
-      const taskName = editModal.querySelector("#editTaskText");
-      const taskDate = editModal.querySelector("#editDueDate");
-      console.log(sample);
       editModal.style.display = "flex";
 
       // Get ID of the task being edited
@@ -143,7 +139,7 @@ class TodoView {
       const id = taskItem.dataset.id;
 
       // Pre-fill form values if needed later
-      // this._fillEditForm(id);
+      this._fillEditForm(id);
 
       editModal.onclick = (event) => {
         if (
@@ -155,7 +151,7 @@ class TodoView {
 
         // Save changes
         if (event.target.matches(".modal__btn--save")) {
-          // const updatedData = this._getEditFormData(this.#data);
+          const updatedData = this._getEditFormData();
           // handler(id, updatedData);
           // editModal.style.display = "none";
         }
@@ -163,8 +159,36 @@ class TodoView {
     });
   }
 
-  _getEditFormData(data) {
-    console.log(data);
+  _fillEditForm(id) {
+    const task = this.#data.find((t) => t.id === id);
+
+    const taskName = document.querySelector("#editTaskText");
+    const dueDate = document.querySelector("#editDueDate");
+    const priorityBtn = document.querySelectorAll(".priority-edit__btn");
+
+    const prioClass = "priority-select__btn--active";
+
+    taskName.value = task.taskName || "";
+    dueDate.value = task.dueDate || "";
+
+    priorityBtn.forEach((btn) => {
+      btn.classList.remove(`${prioClass}`);
+    });
+
+    priorityBtn.forEach((btn) => {
+      if (btn.dataset.priority === task.priority) {
+        btn.classList.add(`${prioClass}`);
+      }
+    });
+  }
+
+  _getEditFormData(id) {
+    // return {
+    //   taskName: document.querySelector("#editTaskName").value.trim(),
+    //   dueDate: document.querySelector("#editDueDate").value,
+    //   priority: document.querySelector(".edit-priority-select__btn--active")
+    //     .dataset.priority,
+    // };
   }
 
   addHandlerDelete(handler) {
