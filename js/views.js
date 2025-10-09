@@ -4,6 +4,7 @@ class TodoView {
   // DOM elements
   _taskParentEl = document.querySelector(".task-list");
   _addModalPerentEl = document.querySelector(".modal--add");
+  _editModalPerentEl = document.querySelector(".modal--edit");
   _form = document.querySelector(".modal__body form");
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
@@ -45,12 +46,11 @@ class TodoView {
             </div>
           </div>
           <div class="task-item__actions">
-            <button class="task-item__btn" aria-label="Edit task">
+            <button class="task-item__btn task-item__btn--edit">
               Edit
             </button>
             <button
               class="task-item__btn task-item__btn--delete"
-              aria-label="Delete task"
             >
               Delete
             </button>
@@ -66,9 +66,8 @@ class TodoView {
     document.body.addEventListener("click", (e) => {
       const isCancel = e.target.matches(".modal__btn--cancel");
       const isClose = e.target.matches(".modal__close-btn");
-      const isOverlay = e.target === this._addModalPerentEl;
 
-      if (isCancel || isClose || isOverlay) {
+      if (isCancel || isClose) {
         this._addModalPerentEl.style.display = "none";
       }
 
@@ -124,6 +123,48 @@ class TodoView {
       const id = item.dataset.id;
       handler(id);
     });
+  }
+
+  addHandlerEdit(handler) {
+    this._taskParentEl.addEventListener("click", (e) => {
+      const editBtn = e.target.closest(".task-item__btn--edit");
+      if (!editBtn) return;
+
+      // Open edit modal
+      const editModal = document.querySelector(".modal--edit");
+      const sample = editModal.querySelector(".modal__body");
+      const taskName = editModal.querySelector("#editTaskText");
+      const taskDate = editModal.querySelector("#editDueDate");
+      console.log(sample);
+      editModal.style.display = "flex";
+
+      // Get ID of the task being edited
+      const taskItem = editBtn.closest(".task-list__item");
+      const id = taskItem.dataset.id;
+
+      // Pre-fill form values if needed later
+      // this._fillEditForm(id);
+
+      editModal.onclick = (event) => {
+        if (
+          event.target.matches(".modal__btn--cancel") ||
+          event.target.matches(".modal__close-btn")
+        ) {
+          editModal.style.display = "none";
+        }
+
+        // Save changes
+        if (event.target.matches(".modal__btn--save")) {
+          // const updatedData = this._getEditFormData(this.#data);
+          // handler(id, updatedData);
+          // editModal.style.display = "none";
+        }
+      };
+    });
+  }
+
+  _getEditFormData(data) {
+    console.log(data);
   }
 
   addHandlerDelete(handler) {
