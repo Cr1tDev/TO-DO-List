@@ -3,13 +3,10 @@ import view from "./views.js";
 
 export const init = function () {
   model.loadTodos();
-  console.log(model.state.todos);
+  view.render(model.state.todos);
 
-  const eventHandler = function () {
-    view.render();
-  };
-
-  const controllAddTask = function () {
+  // Handle Add Task
+  const controlAddTask = function () {
     // Open modal when add button is clicked
     view._AddTaskBtn.addEventListener("click", () => {
       view._initPrioritySelector();
@@ -17,15 +14,14 @@ export const init = function () {
     });
 
     // Handle saving form data when the user clicks "Save"
-    view.addHandlerAddTask(function (taskData) {
+    const controlTaskData = function (taskData) {
       console.log("🟢 New Task Data:", taskData);
+      model.addTodo(taskData);
+      view.render(model.state.todos);
+    };
 
-      // You can now store it in the model
-      // model.addTodo(taskData);
-      // view.render(model.state.todos);
-    });
+    view.addHandlerAddTask(controlTaskData);
   };
 
-  controllAddTask();
-  eventHandler();
+  controlAddTask();
 };

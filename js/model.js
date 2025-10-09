@@ -11,18 +11,16 @@ export const saveTodos = function () {
   localStorage.setItem("todos", JSON.stringify(state.todos));
 };
 
-export const addTodo = function (text) {
+export const addTodo = function (todoData) {
   // generate a random id
   const id =
     Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
 
   const newTodo = {
-    id: id,
-    taskName: text,
+    ...todoData,
+    id,
     completed: false,
-    priority: "high",
-    dueDate: "2025-10-07",
-    createdAt: "07",
+    createdAt: new Date().toISOString(),
   };
 
   state.todos.push(newTodo);

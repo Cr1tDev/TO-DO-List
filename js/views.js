@@ -1,39 +1,62 @@
+import { formatDueDate } from "./helpers.js";
+
 class TodoView {
   // DOM elements
-  _parentEl = document.querySelector(".todo-list");
+  _taskParentEl = document.querySelector(".task-list");
   _addModalPerentEl = document.querySelector(".modal--add");
   _form = document.querySelector(".modal__body form");
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
-  _selectedPriority = "medium";
-  _addTaskData;
-  render(todos) {
-    // this._parentEl.innerHTML = "";
-    // todos.forEach((todo) => {
-    //   const markup = `
-    //     <li class="todo-item ${todo.completed ? "completed" : ""}" data-id="${
-    //     todo.id
-    //   }">
-    //       <div class="checkbox-wrapper">
-    //         <div class="checkbox"></div>
-    //       </div>
-    //       <div class="todo-content">
-    //         <div class="todo-text">
-    //           Review quarterly business reports and prepare presentation
-    //         </div>
-    //         <div class="todo-meta">
-    //           <span class="priority high">High</span>
-    //           <span class="due-date">Due: Today</span>
-    //         </div>
-    //       </div>
-    //       <div class="todo-actions">
-    //         <button class="action-btn">Edit</button>
-    //         <button class="action-btn delete">Delete</button>
-    //       </div>
-    //     </li>
-    //   `;
-    //   this._parentEl.insertAdjacentHTML("beforeend", markup);
-    // });
+  #data;
+
+  render(data) {
+    this.#data = data;
+    const markup = this.taskHandlerMarkup();
+    this._taskParentEl.innerHTML = "";
+    this._taskParentEl.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  taskHandlerMarkup() {
+    return this.#data
+      .map((task) => {
+        return `
+        <li class="task-list__item">
+          <div
+            class="task-item__checkbox"
+            role="checkbox"
+            aria-checked="false"
+            tabindex="0"
+          ></div>
+          <div class="task-item__content">
+            <p class="task-item__text">
+              ${task.taskName}
+            </p>
+            <div class="task-item__meta">
+              <span class="task-item__priority task-item__priority--${
+                task.priority
+              }"
+                >${task.priority}</span
+              >
+              <time class="task-item__due" datetime="2025-10-08"
+                >Due: ${formatDueDate(task.dueDate)}</time
+              >
+            </div>
+          </div>
+          <div class="task-item__actions">
+            <button class="task-item__btn" aria-label="Edit task">
+              Edit
+            </button>
+            <button
+              class="task-item__btn task-item__btn--delete"
+              aria-label="Delete task"
+            >
+              Delete
+            </button>
+          </div>
+        </li>
+      `;
+      })
+      .join("");
   }
 
   addHandlerAddTask(handler) {
@@ -48,17 +71,17 @@ class TodoView {
 
       // When Save button is clicked
       if (e.target.matches(".modal__btn--save")) {
-        const data = this._getFormData();
-        const validData = this.handlerSaveFormData(data);
+        const validData = this._getFormData();
         if (!validData) return;
 
-        this._addTaskData = validData; // store internally
-        handler(validData); // send data to controller
+        handler(validData);
         this._addModalPerentEl.style.display = "none";
-        this._form.reset();
+        this.handlerFormReset();
       }
     });
   }
+
+  handlerFormReset() {}
 
   _initPrioritySelector() {
     const priorityBtn = document.querySelectorAll(".priority-select__btn");
@@ -80,16 +103,13 @@ class TodoView {
     const taskName = document.querySelector("#addTaskName").value.trim();
     const dueDate = document.querySelector("#addDueDate").value;
 
+    if (taskName === "" && dueDate === "") return;
+
     return {
       taskName,
       dueDate,
-      priority: this._selectedPriority,
+      priority: this._selectedPriority || "medium",
     };
-  }
-
-  handlerSaveFormData(data) {
-    if (!data.taskName || !data.dueDate) return;
-    return data;
   }
 
   addHandlerToggle(handler) {
