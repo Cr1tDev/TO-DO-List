@@ -8,13 +8,20 @@ class TodoView {
   _form = document.querySelector(".modal__body form");
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
+  _footerCount = document.querySelector(".footer__count");
+
   #data;
 
   render(data) {
     this.#data = data;
+    this.#handlertaskCount();
     const markup = this.taskHandlerMarkup();
     this._taskParentEl.innerHTML = "";
     this._taskParentEl.insertAdjacentHTML("beforeend", markup);
+  }
+
+  #handlertaskCount() {
+    this._footerCount.textContent = `${this.#data.length} task remaining`;
   }
 
   taskHandlerMarkup() {
@@ -83,7 +90,12 @@ class TodoView {
     });
   }
 
-  handlerFormReset() {}
+  handlerFormReset() {
+    const addTaskName = this._addModalPerentEl.querySelector("#addTaskName");
+    const addTaskDate = this._addModalPerentEl.querySelector("#addDueDate");
+
+    addTaskName.value = addTaskDate.value = "";
+  }
 
   _initPrioritySelector() {
     const priorityBtn = document.querySelectorAll(".priority-select__btn");
@@ -130,13 +142,15 @@ class TodoView {
       const editBtn = e.target.closest(".task-item__btn--edit");
       if (!editBtn) return;
 
-      // Open edit modal
-      const editModal = document.querySelector(".modal--edit");
-      editModal.style.display = "flex";
-
       // Get ID of the task being edited
       const taskItem = editBtn.closest(".task-list__item");
       const id = taskItem.dataset.id;
+
+      if (taskItem.classList.contains("task-list__item--completed")) return;
+
+      // Open edit modal
+      const editModal = document.querySelector(".modal--edit");
+      editModal.style.display = "flex";
 
       // Pre-fill form values if needed later
       this._fillEditForm(id);
@@ -152,12 +166,24 @@ class TodoView {
         // Save changes
         if (event.target.matches(".modal__btn--save")) {
           const updatedData = this._getEditFormData();
-          console.log(updatedData);
-          // handler(id, updatedData);
-          // editModal.style.display = "none";
+          if (this.#validityCheck(updatedData, id)) return;
+          handler(id, updatedData);
+          editModal.style.display = "none";
         }
       };
     });
+  }
+
+  #validityCheck(updatedData, id) {
+    const curData = this.#data.find((t) => t.id === id);
+    if (!curData) return false;
+
+    const { taskName, dueDate, priority } = curData;
+    return (
+      updatedData.taskName === taskName &&
+      updatedData.dueDate === dueDate &&
+      updatedData.priority === priority
+    );
   }
 
   _fillEditForm(id) {

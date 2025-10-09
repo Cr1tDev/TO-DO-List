@@ -38,6 +38,18 @@ export const deleteTodo = function (id) {
   saveTodos();
 };
 
+export const updateTodo = function (id, newData) {
+  const todo = state.todos.find((t) => t.id === id);
+
+  const { taskName, dueDate, priority } = newData;
+
+  todo.taskName = taskName;
+  todo.dueDate = dueDate;
+  todo.priority = priority;
+
+  saveTodos();
+};
+
 export const getTodoStats = function () {
   const total = state.tasks.length;
   const completed = state.tasks.filter((t) => t.completed).length;

@@ -19,9 +19,8 @@ export const init = function () {
 
   // Handle edit Task
   view.addHandlerEdit(function (id, updatedTaskData) {
-    console.log("Editing task:", id, updatedTaskData);
-    // model.updateTodo(id, updatedTaskData);
-    // view.render(model.state.todos);
+    model.updateTodo(id, updatedTaskData);
+    view.render(model.state.todos);
   });
 
   // Handle toggle task
