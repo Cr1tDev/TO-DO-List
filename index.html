@@ -51,14 +51,14 @@
 
         <!-- Filters -->
         <nav class="filters" aria-label="Task filters">
-          <button class="filters__btn filters__btn--active" aria-pressed="true">
+          <button class="filters__btn filters__btn--active" data-filter="all">
             All
           </button>
-          <button class="filters__btn" aria-pressed="false">Active</button>
-          <button class="filters__btn" aria-pressed="false">Completed</button>
-          <button class="filters__btn" aria-pressed="false">
-            High Priority
+          <button class="filters__btn" data-filter="active">Active</button>
+          <button class="filters__btn" data-filter="completed">
+            Completed
           </button>
+          <button class="filters__btn" data-filter="high">High Priority</button>
         </nav>
 
         <!-- Task List -->

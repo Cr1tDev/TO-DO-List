@@ -169,10 +169,6 @@ body {
   transition: all 0.2s;
 }
 
-.filters__btn:hover {
-  background: var(--color-secondary);
-}
-
 .filters__btn--active {
   background: var(--color-primary);
   color: var(--color-white);

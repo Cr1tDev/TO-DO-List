@@ -7,6 +7,7 @@ class TodoView {
   _editModalPerentEl = document.querySelector(".modal--edit");
   _form = document.querySelector(".modal__body form");
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
+  _navFilter = document.querySelector(".filters");
 
   #addTaskNameEl = document.querySelector("#addTaskName");
   #addDueDateEl = document.querySelector("#addDueDate");
@@ -29,6 +30,22 @@ class TodoView {
 
   #handlertaskCount() {
     this._footerCount.textContent = `${this.#data.length} task remaining`;
+  }
+
+  addHandlerFilter(handler) {
+    this._navFilter.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filters__btn");
+      if (!btn) return;
+
+      document
+        .querySelectorAll(".filters__btn")
+        .forEach((b) => b.classList.remove("filters__btn--active"));
+
+      btn.classList.add("filters__btn--active");
+
+      const filterType = btn.dataset.filter;
+      handler(filterType);
+    });
   }
 
   taskHandlerMarkup() {

@@ -1,9 +1,34 @@
 import * as model from "./model.js";
 import view from "./views.js";
 
+const controlFilter = function (filterType) {
+  let filteredTaskData = [];
+
+  switch (filterType) {
+    case "active":
+      filteredTaskData = model.state.todos.filter((todo) => !todo.completed);
+      break;
+    case "completed":
+      filteredTaskData = model.state.todos.filter((todo) => todo.completed);
+      break;
+    case "high":
+      filteredTaskData = model.state.todos.filter(
+        (todo) => todo.priority === "high"
+      );
+      break;
+    default:
+      filteredTaskData = model.state.todos;
+  }
+
+  view.render(filteredTaskData);
+};
+
 export const init = function () {
   model.loadTodos();
   view.render(model.state.todos);
+
+  // Handle filter data task
+  view.addHandlerFilter(controlFilter);
 
   // Open modal when add button is clicked
   view._AddTaskBtn.addEventListener("click", () => {
