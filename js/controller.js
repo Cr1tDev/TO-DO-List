@@ -1,62 +1,69 @@
 import * as model from "./model.js";
 import view from "./views.js";
 
-const controlFilter = function (filterType) {
-  let filteredTaskData = [];
+function applyFilter() {
+  let filtered = [];
 
-  switch (filterType) {
+  switch (model.state.currentFilter) {
     case "active":
-      filteredTaskData = model.state.todos.filter((todo) => !todo.completed);
+      filtered = model.state.todos.filter((t) => !t.completed);
       break;
     case "completed":
-      filteredTaskData = model.state.todos.filter((todo) => todo.completed);
+      filtered = model.state.todos.filter((t) => t.completed);
       break;
     case "high":
-      filteredTaskData = model.state.todos.filter(
-        (todo) => todo.priority === "high"
-      );
+      filtered = model.state.todos.filter((t) => t.priority === "high");
       break;
     default:
-      filteredTaskData = model.state.todos;
+      filtered = model.state.todos;
   }
 
-  view.render(filteredTaskData);
+  view.render(filtered);
+}
+
+const controlFilter = function (filterType) {
+  model.state.currentFilter = filterType;
+  applyFilter();
+};
+
+const controlAdd = function (taskData) {
+  model.addTodo(taskData);
+  applyFilter();
+};
+
+const controlToggle = function (id) {
+  model.toggleTodo(id);
+  applyFilter();
+};
+
+const controlDelete = function (id) {
+  model.deleteTodo(id);
+  applyFilter();
+};
+
+const controlEdit = function (id, updatedTaskData) {
+  model.updateTodo(id, updatedTaskData);
+  applyFilter();
 };
 
 export const init = function () {
   model.loadTodos();
-  view.render(model.state.todos);
 
-  // Handle filter data task
-  view.addHandlerFilter(controlFilter);
-
-  // Open modal when add button is clicked
+  // Open Add Modal (only toggles modal visibility and setups add priority)
   view._AddTaskBtn.addEventListener("click", () => {
-    view._initPrioritySelector();
+    view._initPrioritySelector(); // sets up add-modal priority delegation (idempotent)
     view._addModalPerentEl.style.display = "flex";
   });
 
-  // Handle saving form data when the user clicks "Save"
-  view.addHandlerAddTask(function (taskData) {
-    model.addTodo(taskData);
-    view.render(model.state.todos);
-  });
+  // Pass a getter for full data to the edit handler so it can always find the correct task
+  view.addHandlerEdit(controlEdit, () => model.state.todos);
 
-  // Handle edit Task
-  view.addHandlerEdit(function (id, updatedTaskData) {
-    model.updateTodo(id, updatedTaskData);
-    view.render(model.state.todos);
-  });
+  // Other handlers
+  view.addHandlerFilter(controlFilter);
+  view.addHandlerAddTask(controlAdd);
+  view.addHandlerToggle(controlToggle);
+  view.addHandlerDelete(controlDelete);
 
-  // Handle toggle task
-  view.addHandlerToggle(function (id) {
-    model.toggleTodo(id);
-    view.render(model.state.todos);
-  });
-
-  // Handle delete task
-  view.addHandlerDelete(function (id) {
-    model.deleteTodo(id);
-    view.render(model.state.todos);
-  });
+  // initial render with current filter
+  applyFilter();
 };
