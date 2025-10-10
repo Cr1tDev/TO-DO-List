@@ -8,8 +8,15 @@ class TodoView {
   _form = document.querySelector(".modal__body form");
   _AddTaskBtn = document.querySelector(".task-card__add-btn");
 
+  #addTaskNameEl = document.querySelector("#addTaskName");
+  #addDueDateEl = document.querySelector("#addDueDate");
+  #editTaskNameEl = document.querySelector("#editTaskText");
+  #editDueDateEl = document.querySelector("#editDueDate");
+  #priorityBtn = document.querySelectorAll(".priority-select__btn");
+
   _footerCount = document.querySelector(".footer__count");
 
+  #selectedPriority = "";
   #data;
 
   render(data) {
@@ -85,44 +92,35 @@ class TodoView {
 
         handler(validData);
         this._addModalPerentEl.style.display = "none";
-        this.handlerFormReset();
+        this.#addTaskNameEl.value = this.#addDueDateEl.value = "";
       }
     });
   }
 
-  handlerFormReset() {
-    const addTaskName = this._addModalPerentEl.querySelector("#addTaskName");
-    const addTaskDate = this._addModalPerentEl.querySelector("#addDueDate");
-
-    addTaskName.value = addTaskDate.value = "";
-  }
-
   _initPrioritySelector() {
-    const priorityBtn = document.querySelectorAll(".priority-select__btn");
-
-    priorityBtn.forEach((btn) => {
+    this.#priorityBtn.forEach((btn) => {
       btn.addEventListener("click", () => {
-        priorityBtn.forEach((b) =>
+        this.#priorityBtn.forEach((b) =>
           b.classList.remove("priority-select__btn--active")
         );
 
         btn.classList.add("priority-select__btn--active");
 
-        this._selectedPriority = btn.dataset.priority;
+        this.#selectedPriority = btn.dataset.priority;
       });
     });
   }
 
   _getFormData() {
-    const taskName = document.querySelector("#addTaskName").value.trim();
-    const dueDate = document.querySelector("#addDueDate").value;
+    const inputTaskName = this.#addTaskNameEl.value.trim();
+    const inputDueDate = this.#addDueDateEl.value;
 
-    if (taskName === "") return;
+    if (inputTaskName === "") return;
 
     return {
-      taskName,
-      dueDate,
-      priority: this._selectedPriority || "medium",
+      taskName: inputTaskName,
+      dueDate: inputDueDate,
+      priority: this.#selectedPriority || "medium",
     };
   }
 
@@ -189,28 +187,24 @@ class TodoView {
   _fillEditForm(id) {
     const task = this.#data.find((t) => t.id === id);
 
-    const taskName = document.querySelector("#editTaskText");
-    const dueDate = document.querySelector("#editDueDate");
-    const priorityBtn = document.querySelectorAll(".priority-edit__btn");
-
     const ACTIVE_CLASS = "priority-select__btn--active";
 
-    taskName.value = task.taskName || "";
-    dueDate.value = task.dueDate || "";
+    this.#editTaskNameEl.value = task.taskName;
+    this.#editDueDateEl.value = task.dueDate;
 
-    priorityBtn.forEach((btn) => {
+    this.#priorityBtn.forEach((btn) => {
       btn.classList.remove(ACTIVE_CLASS);
     });
 
-    priorityBtn.forEach((btn) => {
+    this.#priorityBtn.forEach((btn) => {
       if (btn.dataset.priority === task.priority) {
         btn.classList.add(ACTIVE_CLASS);
       }
     });
 
-    priorityBtn.forEach((btn) => {
+    this.#priorityBtn.forEach((btn) => {
       btn.addEventListener("click", () => {
-        priorityBtn.forEach((b) => b.classList.remove(ACTIVE_CLASS));
+        this.#priorityBtn.forEach((b) => b.classList.remove(ACTIVE_CLASS));
 
         btn.classList.add(ACTIVE_CLASS);
       });
@@ -219,8 +213,8 @@ class TodoView {
 
   _getEditFormData() {
     return {
-      taskName: document.querySelector("#editTaskText").value.trim(),
-      dueDate: document.querySelector("#editDueDate").value,
+      taskName: this.#editTaskNameEl.value.trim(),
+      dueDate: this.#editDueDateEl.value,
       priority: document.querySelector(".priority-select__btn--active").dataset
         .priority,
     };
