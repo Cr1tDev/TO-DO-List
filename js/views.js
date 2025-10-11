@@ -264,6 +264,7 @@ class TodoView {
     const editBtns = this._editModalPerentEl.querySelectorAll(
       ".priority-edit__btn"
     );
+
     editBtns.forEach((btn) => btn.classList.remove(ACTIVE_CLASS));
 
     const match = Array.from(editBtns).find(

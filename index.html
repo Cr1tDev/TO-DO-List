@@ -18,16 +18,53 @@
       <!-- Stats Section -->
       <section class="stats" aria-label="Task statistics">
         <article class="stats__card">
-          <span class="stats__value">12</span>
-          <span class="stats__label">Total Tasks</span>
+          <div>
+            <span class="stats__value">3</span>
+            <span class="stats__label">Total Tasks</span>
+          </div>
+          <svg
+            class="stats__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
         </article>
         <article class="stats__card">
-          <span class="stats__value">7</span>
-          <span class="stats__label">Completed</span>
+          <div>
+            <span class="stats__value">2</span>
+            <span class="stats__label">In Progress</span>
+          </div>
+          <svg
+            class="stats__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
         </article>
         <article class="stats__card">
-          <span class="stats__value">5</span>
-          <span class="stats__label">In Progress</span>
+          <div>
+            <span class="stats__value">1</span>
+            <span class="stats__label">Completed</span>
+          </div>
+          <svg
+            class="stats__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
         </article>
       </section>
 
@@ -113,6 +150,39 @@
                 >
                 <time class="task-item__due" datetime="2025-10-07"
                   >Due: Yesterday</time
+                >
+              </div>
+            </div>
+            <div class="task-item__actions">
+              <button class="task-item__btn" aria-label="Edit task">
+                Edit
+              </button>
+              <button
+                class="task-item__btn task-item__btn--delete"
+                aria-label="Delete task"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+
+          <li class="task-list__item">
+            <div
+              class="task-item__checkbox"
+              role="checkbox"
+              aria-checked="false"
+              tabindex="0"
+            ></div>
+            <div class="task-item__content">
+              <p class="task-item__text">
+                Update project documentation and API references
+              </p>
+              <div class="task-item__meta">
+                <span class="task-item__priority task-item__priority--low"
+                  >Low</span
+                >
+                <time class="task-item__due" datetime="2025-10-15"
+                  >Due: Oct 15</time
                 >
               </div>
             </div>
